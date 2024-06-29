@@ -137,6 +137,7 @@ Asocia los auditores con los proyectos en los que están trabajando.
 
 ## Scripts SQL para la creación de la base de datos y las tablas
 
+```sql
 -- Creación de la base de datos
 CREATE DATABASE IF NOT EXISTS auditoria;
 USE auditoria;
