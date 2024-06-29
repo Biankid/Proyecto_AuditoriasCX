@@ -135,7 +135,7 @@ Asocia los auditores con los proyectos en los que están trabajando.
 | PK,FK | id_proyecto  | INT       |        | NOT NULL  | NO       |         | Referencia al proyecto específico        |
 |       | descripcion  | TEXT      |        | NOT NULL  | NO       |         | Descripción del proyecto                 |
 
-## Scripts SQL para la creación de la base de datos y las tablas
+## Scripts SQL para la creación de la base de datos y las tablas + inserción de datos en las tablas
 
 ```sql
 -- Creación de la base de datos
@@ -212,3 +212,56 @@ CREATE TABLE IF NOT EXISTS AuditorProyecto (
     PRIMARY KEY (id_auditor, id_proyecto),
     FOREIGN KEY (id_auditor) REFERENCES Auditor(id_auditor)
 );
+
+-- Scripts SQL para la inserción de datos en las tablas
+
+-- Inserción de datos en la tabla Condicion
+INSERT INTO Condicion (descripcion, precio, plazo) VALUES
+('Pago inmediato', 1000.00, 0),
+('Pago a 30 días', 950.00, 30);
+
+-- Inserción de datos en la tabla Empresa
+INSERT INTO Empresa (razon_social, direccion, localidad, telefono, correo, id_condicion) VALUES
+('Bodega BIA', 'Calle San Martin 1234', 'Buenos Aires', '01112345678', 'contacto@bodegabia.com', 1),
+('Bodega Schifrin', 'Avenida Cordoba 5678', 'Mendoza', '02611234567', 'info@bodegaschifrin.com', 2);
+
+-- Inserción de datos en la tabla Auditor
+INSERT INTO Auditor (nombre, apellido, telefono, correo, id_empresa, id_condicion) VALUES
+('Juan', 'Perez', '01198765432', 'juan.perez@bodegabia.com', 1, 1),
+('Ana', 'Gomez', '02619876543', 'ana.gomez@bodegaschifrin.com', 2, 2),
+('Carlos', 'Lopez', '01187654321', 'carlos.lopez@bodegabia.com', 1, 1),
+('María', 'Fernandez', '02618765432', 'maria.fernandez@bodegaschifrin.com', 2, 2);
+
+-- Inserción de datos en la tabla Caso
+INSERT INTO Caso (id_auditor, fecha_inicio, fecha_fin, descripcion, id_condicion) VALUES
+(1, '2024-01-01', '2024-01-15', 'Auditoría de procesos en Bodega BIA', 1),
+(2, '2024-02-01', '2024-02-10', 'Auditoría de calidad en Bodega Schifrin', 2),
+(3, '2024-03-01', '2024-03-20', 'Revisión de cumplimiento en Bodega BIA', 1),
+(4, '2024-04-01', '2024-04-15', 'Evaluación de seguridad en Bodega Schifrin', 2);
+
+-- Inserción de datos en la tabla KPI
+INSERT INTO KPI (descripcion, tipo) VALUES
+('Tiempo de resolución de casos', 'Cuantitativo'),
+('Satisfacción del cliente', 'Cualitativo'),
+('Cumplimiento de normas', 'Cuantitativo'),
+('Eficiencia operativa', 'Cuantitativo');
+
+-- Inserción de datos en la tabla CasoKPI
+INSERT INTO CasoKPI (id_caso, id_kpi, valor) VALUES
+(1, 1, 10.5),
+(1, 2, 8.2),
+(2, 1, 7.0),
+(2, 2, 9.0),
+(3, 3, 95.0),
+(3, 4, 87.5),
+(4, 3, 92.0),
+(4, 4, 85.0);
+
+-- Inserción de datos en la tabla AuditorProyecto
+INSERT INTO AuditorProyecto (id_auditor, id_proyecto, descripcion) VALUES
+(1, 1, 'Proyecto de mejora continua en Bodega BIA'),
+(2, 2, 'Proyecto de auditoría de calidad en Bodega Schifrin'),
+(3, 3, 'Proyecto de revisión de cumplimiento en Bodega BIA'),
+(4, 4, 'Proyecto de evaluación de seguridad en Bodega Schifrin');
+
+
