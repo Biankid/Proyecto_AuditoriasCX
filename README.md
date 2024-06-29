@@ -9,7 +9,7 @@ El objetivo de esta base de datos es gestionar y evaluar la información del equ
 
 ### Diagrama de Entidad-Relación
 
-![Diagrama E-R](DER(2).PNG)
+![Diagrama E-R](diagrama_ER.png)
 
 ## Listado de tablas
 
