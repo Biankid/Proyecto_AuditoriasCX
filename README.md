@@ -9,7 +9,7 @@ El objetivo de esta base de datos es gestionar y evaluar la información del equ
 
 ### Diagrama de Entidad-Relación
 
-![Diagrama E-R](ruta)
+![Diagrama E-R](DER(2).png)
 
 ## Listado de tablas
 
