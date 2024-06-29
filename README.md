@@ -137,5 +137,77 @@ Asocia los auditores con los proyectos en los que están trabajando.
 
 ## Scripts SQL para la creación de la base de datos y las tablas
 
+-- Creación de la base de datos
+CREATE DATABASE IF NOT EXISTS auditoria;
+USE auditoria;
 
+-- Creación de la tabla Condicion
+CREATE TABLE IF NOT EXISTS Condicion (
+    id_condicion INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(255) NOT NULL,
+    precio DECIMAL(10, 2) NOT NULL DEFAULT 5000.00,
+    plazo INT NOT NULL DEFAULT 0
+);
 
+-- Creación de la tabla Empresa
+CREATE TABLE IF NOT EXISTS Empresa (
+    id_empresa INT AUTO_INCREMENT PRIMARY KEY,
+    razon_social VARCHAR(255) NOT NULL,
+    direccion VARCHAR(255) NOT NULL,
+    localidad VARCHAR(255) NOT NULL,
+    telefono VARCHAR(20) NOT NULL,
+    correo VARCHAR(255) NOT NULL,
+    id_condicion INT NOT NULL,
+    FOREIGN KEY (id_condicion) REFERENCES Condicion(id_condicion)
+);
+
+-- Creación de la tabla Auditor
+CREATE TABLE IF NOT EXISTS Auditor (
+    id_auditor INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    apellido VARCHAR(255) NOT NULL,
+    telefono VARCHAR(20) NOT NULL,
+    correo VARCHAR(255) NOT NULL,
+    id_empresa INT NOT NULL,
+    id_condicion INT NOT NULL,
+    FOREIGN KEY (id_empresa) REFERENCES Empresa(id_empresa),
+    FOREIGN KEY (id_condicion) REFERENCES Condicion(id_condicion)
+);
+
+-- Creación de la tabla Caso
+CREATE TABLE IF NOT EXISTS Caso (
+    id_caso INT AUTO_INCREMENT PRIMARY KEY,
+    id_auditor INT NOT NULL,
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL,
+    descripcion TEXT NOT NULL,
+    id_condicion INT NOT NULL,
+    FOREIGN KEY (id_auditor) REFERENCES Auditor(id_auditor),
+    FOREIGN KEY (id_condicion) REFERENCES Condicion(id_condicion)
+);
+
+-- Creación de la tabla KPI
+CREATE TABLE IF NOT EXISTS KPI (
+    id_kpi INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(255) NOT NULL,
+    tipo VARCHAR(50) NOT NULL
+);
+
+-- Creación de la tabla CasoKPI
+CREATE TABLE IF NOT EXISTS CasoKPI (
+    id_caso INT NOT NULL,
+    id_kpi INT NOT NULL,
+    valor DECIMAL(10, 2) NOT NULL,
+    PRIMARY KEY (id_caso, id_kpi),
+    FOREIGN KEY (id_caso) REFERENCES Caso(id_caso),
+    FOREIGN KEY (id_kpi) REFERENCES KPI(id_kpi)
+);
+
+-- Creación de la tabla AuditorProyecto
+CREATE TABLE IF NOT EXISTS AuditorProyecto (
+    id_auditor INT NOT NULL,
+    id_proyecto INT NOT NULL,
+    descripcion TEXT NOT NULL,
+    PRIMARY KEY (id_auditor, id_proyecto),
+    FOREIGN KEY (id_auditor) REFERENCES Auditor(id_auditor)
+);
