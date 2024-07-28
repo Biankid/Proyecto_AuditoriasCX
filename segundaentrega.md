@@ -89,7 +89,13 @@ Gestionar la eliminación completa de datos de un auditor.
 - `Caso`
 - `AuditorProyecto`
 
-  ## Script de Creación de Vistas, Funciones, Stored Procedures y Triggers:
+  ## Paso a Paso para la Inserción de Datos mediante Importación
+
+- Crear los archivos CSV: Crear archivos CSV con los datos para cada una de las tablas.
+- Guardar los archivos CSV: Guardar los archivos CSV en la ruta adecuada.
+- Utilizar los comandos COPY: Usar los comandos COPY para importar los datos desde los archivos CSV a las tablas correspondientes.
+
+  ## Script de Creación de Vistas, Funciones, Stored Procedures y Triggers e inserción de datos:
 
 ```sql
 -- Creación de Vistas
@@ -168,3 +174,68 @@ BEGIN
     DELETE FROM Caso WHERE id_auditor = p_id_auditor;
     DELETE FROM Auditor WHERE id_auditor = p_id_auditor;
 END;
+
+-- En la primer entrega se realizó ingreso de datos con insert to, se detalla la importacion con LOAD DATA INFILE
+
+-- Importar datos a la tabla Condicion
+LOAD DATA INFILE '/path/to/condicion.csv'
+INTO TABLE Condicion
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(id_condicion, descripcion, precio, plazo);
+
+-- Importar datos a la tabla Empresa
+LOAD DATA INFILE '/path/to/empresa.csv'
+INTO TABLE Empresa
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(id_empresa, razon_social, direccion, localidad, telefono, correo, id_condicion);
+
+-- Importar datos a la tabla Auditor
+LOAD DATA INFILE '/path/to/auditor.csv'
+INTO TABLE Auditor
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(id_auditor, nombre, apellido, telefono, correo, id_empresa, id_condicion);
+
+-- Importar datos a la tabla Caso
+LOAD DATA INFILE '/path/to/caso.csv'
+INTO TABLE Caso
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(id_caso, id_auditor, fecha_inicio, fecha_fin, descripcion, id_condicion);
+
+-- Importar datos a la tabla KPI
+LOAD DATA INFILE '/path/to/kpi.csv'
+INTO TABLE KPI
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(id_kpi, descripcion, tipo);
+
+-- Importar datos a la tabla CasoKPI
+LOAD DATA INFILE '/path/to/caso_kpi.csv'
+INTO TABLE CasoKPI
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(id_caso, id_kpi, valor);
+
+-- Importar datos a la tabla AuditorProyecto
+LOAD DATA INFILE '/path/to/auditor_proyecto.csv'
+INTO TABLE AuditorProyecto
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(id_auditor, id_proyecto, descripcion);
