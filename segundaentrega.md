@@ -178,6 +178,7 @@ END;
 -- En la primer entrega se realizó ingreso de datos con insert to, se detalla la importacion con LOAD DATA INFILE
 
 -- Importar datos a la tabla Condicion
+
 LOAD DATA INFILE '/path/to/condicion.csv'
 INTO TABLE Condicion
 FIELDS TERMINATED BY ','
@@ -187,6 +188,7 @@ IGNORE 1 ROWS
 (id_condicion, descripcion, precio, plazo);
 
 -- Importar datos a la tabla Empresa
+
 LOAD DATA INFILE '/path/to/empresa.csv'
 INTO TABLE Empresa
 FIELDS TERMINATED BY ','
@@ -196,6 +198,7 @@ IGNORE 1 ROWS
 (id_empresa, razon_social, direccion, localidad, telefono, correo, id_condicion);
 
 -- Importar datos a la tabla Auditor
+
 LOAD DATA INFILE '/path/to/auditor.csv'
 INTO TABLE Auditor
 FIELDS TERMINATED BY ','
@@ -223,6 +226,7 @@ IGNORE 1 ROWS
 (id_kpi, descripcion, tipo);
 
 -- Importar datos a la tabla CasoKPI
+
 LOAD DATA INFILE '/path/to/caso_kpi.csv'
 INTO TABLE CasoKPI
 FIELDS TERMINATED BY ','
@@ -232,6 +236,7 @@ IGNORE 1 ROWS
 (id_caso, id_kpi, valor);
 
 -- Importar datos a la tabla AuditorProyecto
+
 LOAD DATA INFILE '/path/to/auditor_proyecto.csv'
 INTO TABLE AuditorProyecto
 FIELDS TERMINATED BY ','
